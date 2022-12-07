@@ -31,7 +31,7 @@
 
 using namespace std;
 
-const unsigned NUM_COMPLEJOS = 20;
+const unsigned NUM_COMPLEJOS = 5;
 const unsigned PRECISON = 2;
 
 struct Complejo { 
