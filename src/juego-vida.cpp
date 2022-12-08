@@ -74,6 +74,7 @@ void pideDatos(unsigned& numFilas, unsigned& numColumnas, unsigned& generaciones
 
 }
 
+
 int main() {
     // Posibles valores de una celda del tablero:
     // false: Vacía
@@ -81,6 +82,10 @@ int main() {
     // Declara matriz de MAX_FILAS x MAX_COLUMNAS
     // e inicializa como celdas vacías
     bool tablero[MAX_FILAS][MAX_COLUMNAS] = {false};
+
+    unsigned numFilas, numColumnas, generaciones;
+    pideDatos(numFilas, numColumnas, generaciones);
+
 
     return 0;
 }
