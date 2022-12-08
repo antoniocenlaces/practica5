@@ -26,6 +26,7 @@
 #include <iomanip>
 #include <cmath>
 // #include <ctime>
+// <ctime> debe usarse para mejorar la aleatoriedad de srand
 #include <cstdlib>
 #include <iomanip>
 
@@ -146,6 +147,8 @@ Complejo suma(const Complejo vectorComplejo[NUM_COMPLEJOS]) {
 }
 
 int main() {
+    // Para mejorar el rendimiento del algoritmo srand quitar comentario
+    // a la línea a continuación, además de #include <ctime>
     // srand(time(NULL));
 
     double x, y;
