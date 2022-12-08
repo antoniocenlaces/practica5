@@ -53,18 +53,19 @@ void negativiza(Imagen& img) {
  *       guardada en la variable img de tipo Imagen.
  */
 void rota(Imagen& img) {
-    // en copiaImg hago una copia de img recibido
-    Imagen copiaImg;
-    copiaImg = img;
-    // Inicia bucle para rotar copiaImg en img
-    for (unsigned i = 0; i < img.alto; i++) {
+    // Uso copiaPixel para guardar el pixel original que voy a cambiar
+    Pixel copiaPixel;
+    
+    // El bucle recorre la imagen, en altura, hasta la línea media
+    // Funciona por ser alto un múltiplo de 4 
+    for (unsigned i = 0; i < img.alto / 2; i++) {
         for (unsigned j = 0; j < img.ancho; j++) {
-            img.pixels[i][j].rojo = copiaImg.pixels[copiaImg.alto - 1 - i]
-                                        [copiaImg.ancho - 1 - j].rojo;
-            img.pixels[i][j].verde = copiaImg.pixels[copiaImg.alto - 1 - i]
-                                        [copiaImg.ancho - 1 - j].verde;
-            img.pixels[i][j].azul = copiaImg.pixels[copiaImg.alto - 1 - i]
-                                        [copiaImg.ancho - 1 - j].azul;
+            // Almaceno el pixel que voy a cambiar
+            copiaPixel = img.pixels[i][j];
+            // Cambio el pixel de la posición donde estoy por el rotado 180º
+            img.pixels[i][j] = img.pixels[img.alto - 1 - i][img.ancho - 1 - j];
+            // En el rotado almaceno la posición donde estoy
+            img.pixels[img.alto - 1 - i][img.ancho - 1 - j] = copiaPixel;
         }
     }
     
