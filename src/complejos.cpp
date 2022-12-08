@@ -72,7 +72,8 @@ void generaVectorAleatorio(const double x, const double y, Complejo vectorComple
 */
 void imprimeComplejo(const Complejo numero) {
      cout << fixed << setprecision(PRECISON) << numero.a 
-          << (numero.b >= 0 ? "+" : "") << numero.b << "i";
+          << showpos << numero.b << "i" << noshowpos;
+          // (numero.b >= 0 ? "+" : "")
 }
 
 /* Pre: 
