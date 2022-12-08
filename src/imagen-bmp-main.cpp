@@ -31,6 +31,45 @@ using namespace std;
  * Después modifica la función «main» (incluyendo esta especificación) para
  * resolver el problema solicitado en la tarea 2 de la práctica.
  */
+
+/*
+ * Pre:  ---
+ * Post: Tras ejecutar este procedimiento, negativiza la imagen 
+ *       guardada en la variable img de tipo Imagen.
+ */
+void negativiza(Imagen& img) {
+     for (unsigned i = 0; i < img.alto; i++) {
+            for (unsigned j = 0; j < img.ancho; j++) {
+                img.pixels[i][j].rojo = 255 - img.pixels[i][j].rojo;
+                img.pixels[i][j].verde = 255 - img.pixels[i][j].verde;
+                img.pixels[i][j].azul = 255 - img.pixels[i][j].azul;
+            }
+        }
+}
+
+/*
+ * Pre:  ---
+ * Post: Tras ejecutar este procedimiento, rota 180º la imagen 
+ *       guardada en la variable img de tipo Imagen.
+ */
+void rota(Imagen& img) {
+    // en copiaImg hago una copia de img recibido
+    Imagen copiaImg;
+    copiaImg = img;
+    // Inicia bucle para rotar copiaImg en img
+    for (unsigned i = 0; i < img.alto; i++) {
+        for (unsigned j = 0; j < img.ancho; j++) {
+            img.pixels[i][j].rojo = copiaImg.pixels[copiaImg.alto - 1 - i]
+                                        [copiaImg.ancho - 1 - j].rojo;
+            img.pixels[i][j].verde = copiaImg.pixels[copiaImg.alto - 1 - i]
+                                        [copiaImg.ancho - 1 - j].verde;
+            img.pixels[i][j].azul = copiaImg.pixels[copiaImg.alto - 1 - i]
+                                        [copiaImg.ancho - 1 - j].azul;
+        }
+    }
+    
+}
+
 int main() {
     static Imagen img;
     string nombreFichero = "datos/prog1.bmp";
@@ -38,14 +77,36 @@ int main() {
      * Deberás completar el código aquí para pedir el nombre del fichero y
      * completar la interacción con el usuario.
      */
-   
-    if (leerImagen(nombreFichero, img)) {
+    string ficheroLectura;
+    cout << "Dime el nombre del fichero de imagen (.bmp) a leer: ";
+    cin >> ficheroLectura;
+    char accion;
+    cout << "¿Que acción deseas realizar sobre el fichero de imagen?" << endl;
+    cout << "\"N\" para Negativizar; \"R\" para Girar la imagen 180º: ";
+    do {
+        cin >> accion;
+        accion = toupper(accion);
+    } while (accion != 'N' && accion !='R');
+
+    string ficheroEscritura;
+    cout << "Dime el nombre del fichero de imagen (.bmp) donde escribir: ";
+    cin >> ficheroEscritura;
+
+    if (leerImagen(ficheroLectura, img)) {
         /*
          * Aquí irá el código que manipule las imágenes según lo solicitado en
          * el enunciado de la práctica. Lo ideal es que haya invocaciones a
          * funciones que realicen esas manipulaciones.
          */
-        guardarImagen("datos/imagen-generada.bmp", img);
+        switch (accion) {
+            case 'N':
+                negativiza(img);
+                break;
+            case 'R':
+                rota(img);
+                break;
+        } 
+        guardarImagen(ficheroEscritura, img);
         return 0;
     }
     else {
