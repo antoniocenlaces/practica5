@@ -24,6 +24,9 @@
 \******************************************************************************/
 
 #include <iostream>
+#include <iomanip>
+#include <ctime>
+
 using namespace std;
 
 const unsigned MAX_FILAS = 50;
@@ -56,26 +59,69 @@ void subirCursor(const unsigned lineas) {
  * Número de columnas mayor que 0 y menor o igual que MAX_COLUMNAS
  * Número de generaciones a simular mayor que 0
  */
-void pideDatos(unsigned& numFilas, unsigned& numColumnas, unsigned& generaciones ) {
-    cout << "Número de filas: ";
+void pideDatos(int& numFilas, int& numColumnas, int& generaciones ) {
+    
     do {
+        cout << "Número de filas: ";
         cin >> numFilas;
-    } while(numFilas < 0 || numFilas > MAX_FILAS);
+    } while(numFilas < 0 || numFilas > int(MAX_FILAS));
 
-    cout << "Número de Columnas: ";
     do {
+        cout << "Número de Columnas: ";
         cin >> numColumnas;
-    } while(numColumnas <= 0 || numColumnas > MAX_COLUMNAS);
+    } while(numColumnas <= 0 || numColumnas > int(MAX_COLUMNAS));
 
-    cout << "Número de generaciones: ";
     do {
+        cout << "Número de generaciones: ";
         cin >> generaciones;
     } while(generaciones < 0);
 
 }
 
+/*
+ * Pre:  tablero es una matriz de booleanos con MAX_FILAS x MAX_COLUMNAS
+ *        0 < numFilas <= MAX_FILAS
+ *        0 < numColumnas <= MAX_COLUMNAS
+ *       
+ * Post: Genera un tablero de numFilas x numColumnas en la matriz
+ *       tablero y llena las celdas con células de forma aleatoria,
+ *       cumpliendo que la probabilidad de una celda contener una célula es
+ *       del 20%.
+ */
+void iniciaTablero(bool tablero[][MAX_COLUMNAS], const int numFilas, const int numColumnas) {
+    for (unsigned i = 0; i < unsigned(numFilas); i++){
+        for (unsigned j = 0; j < unsigned(numColumnas); j++) { 
+            tablero[i][j] = (double(rand()) / RAND_MAX) <= 0.2;
+        }
+    }
+}
+
+/*
+ * Pre:  tablero es una matriz de booleanos con MAX_FILAS x MAX_COLUMNAS
+ *        0 < numFilas <= MAX_FILAS
+ *        0 < numColumnas <= MAX_COLUMNAS
+ *       
+ * Post: Muestra en pantalla el contenido de tablero de numFilas x numColumnas
+ *       cuando el contenido de la celda es 'true' escribe '*'
+ *       cuando el contenido de la celda es 'false' escribe ' '
+ */
+void imprimeTablero(bool tablero[][MAX_COLUMNAS], const int numFilas, const int numColumnas) {
+     for (unsigned i = 0; i < unsigned(numFilas); i++){
+        for (unsigned j = 0; j < unsigned(numColumnas); j++) { 
+            cout << setw(2) << (tablero[i][j] ? '*' : ' ');
+        }
+        cout << endl;
+    }
+}
+
+void avanzaGeneracion(bool tablero[][MAX_COLUMNAS], const int numFilas, const int numColumnas) {
+ for (unsigned i = 0; i < 1000000; i++){
+    int a;
+    a = i - 1;}
+}
 
 int main() {
+    srand(time(NULL));
     // Posibles valores de una celda del tablero:
     // false: Vacía
     // true: Célula viva
@@ -83,9 +129,21 @@ int main() {
     // e inicializa como celdas vacías
     bool tablero[MAX_FILAS][MAX_COLUMNAS] = {false};
 
-    unsigned numFilas, numColumnas, generaciones;
+    int numFilas, numColumnas, generaciones;
     pideDatos(numFilas, numColumnas, generaciones);
 
+    iniciaTablero(tablero, numFilas, numColumnas);
 
+    borrarPantalla();
+    cout << "Generación 0" << endl;
+    imprimeTablero(tablero, numFilas, numColumnas);
+
+    for (unsigned g = 1; g <= generaciones; g++) {
+        subirCursor(numFilas + 1);
+        cout << "Generación " << g  << endl;
+        imprimeTablero(tablero, numFilas, numColumnas);
+        avanzaGeneracion(tablero, numFilas, numColumnas);
+    }
+    
     return 0;
 }

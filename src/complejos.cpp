@@ -27,8 +27,8 @@
 #include <cmath>
 // #include <ctime>
 // <ctime> debe usarse para mejorar la aleatoriedad de srand
-#include <cstdlib>
-#include <iomanip>
+// #include <cstdlib>
+
 
 using namespace std;
 
