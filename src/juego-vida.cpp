@@ -49,6 +49,38 @@ void subirCursor(const unsigned lineas) {
     cout << "\033[" << lineas << "A";
 }
 
+/*
+ * Pre:  ---
+ * Post: Pide al usuario los datos para desarrollar el juego de la vida.
+ * Número de filas mayor que 0 y menor o igual que MAX_FILAS
+ * Número de columnas mayor que 0 y menor o igual que MAX_COLUMNAS
+ * Número de generaciones a simular mayor que 0
+ */
+void pideDatos(unsigned& numFilas, unsigned& numColumnas, unsigned& generaciones ) {
+    cout << "Número de filas: ";
+    do {
+        cin >> numFilas;
+    } while(numFilas < 0 || numFilas > MAX_FILAS);
+
+    cout << "Número de Columnas: ";
+    do {
+        cin >> numColumnas;
+    } while(numColumnas <= 0 || numColumnas > MAX_COLUMNAS);
+
+    cout << "Número de generaciones: ";
+    do {
+        cin >> generaciones;
+    } while(generaciones < 0);
+
+}
+
 int main() {
+    // Posibles valores de una celda del tablero:
+    // false: Vacía
+    // true: Célula viva
+    // Declara matriz de MAX_FILAS x MAX_COLUMNAS
+    // e inicializa como celdas vacías
+    bool tablero[MAX_FILAS][MAX_COLUMNAS] = {false};
+
     return 0;
 }
