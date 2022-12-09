@@ -119,9 +119,8 @@ void imprimeTablero(bool tablero[][MAX_COLUMNAS], const int numFilas, const int 
  *        0 < numFilas <= MAX_FILAS
  *        0 < numColumnas <= MAX_COLUMNAS
  *       
- * Post: Muestra en pantalla el contenido de tablero de numFilas x numColumnas
- *       cuando el contenido de la celda es 'true' escribe '*'
- *       cuando el contenido de la celda es 'false' escribe ' '
+ * Post: Recorre todas las celdas de la matriz tablero y devuelve el número
+ *       acumulado de celdas que contienen true
  */
 unsigned cuentaVivas(bool tablero[][MAX_COLUMNAS], const int numFilas, const int numColumnas) {
     unsigned vivas = 0;
@@ -132,6 +131,38 @@ unsigned cuentaVivas(bool tablero[][MAX_COLUMNAS], const int numFilas, const int
     }
     return vivas;
 }
+
+/*
+ * Pre:  tablero es una matriz de booleanos con MAX_FILAS x MAX_COLUMNAS
+ *        0 < numFilas <= MAX_FILAS
+ *        0 < numColumnas <= MAX_COLUMNAS
+ *        0 <= fila < numFilas
+ *        0 <= columna < numColumnas 
+ *       
+ * Post: Calcula el número de celdas de tablero que son adyacentes a la
+ *       celda (fila,columna) y cuyo valor es true
+ */
+unsigned vecinas(bool tablero[][MAX_COLUMNAS], const int numFilas, const int numColumnas, const int fila,
+                const int columna) {
+        unsigned vivas = 0;
+        int inicioFila, finFila, inicioColumna, finColumna;
+        inicioFila = fila == 0 ? 0 : fila - 1;
+        finFila = fila == numFilas - 1 ? fila : fila + 1;
+        inicioColumna = columna == 0 ? 0 : columna - 1;
+        finColumna = columna == numColumnas - 1 ? columna : columna + 1;
+        for (int i = inicioFila; i <= finFila; i++) {
+            for (int j = inicioColumna; j <= finColumna; j++) {
+                if(i == fila) {
+                    if (j != columna) {
+                        vivas += tablero[i][j];
+                    } 
+                } else {
+                    vivas += tablero[i][j];
+                }
+            }
+        }
+        return vivas;
+    }
 
 /*
  * Pre:  tablero es una matriz de booleanos con MAX_FILAS x MAX_COLUMNAS
@@ -148,7 +179,7 @@ void avanzaGeneracion(bool tablero[][MAX_COLUMNAS], const int numFilas, const in
 }
 
 int main() {
-    srand(time(NULL));
+    // srand(time(NULL));
     // Posibles valores de una celda del tablero:
     // false: Vacía
     // true: Célula viva
@@ -171,7 +202,18 @@ int main() {
         imprimeTablero(tablero, numFilas, numColumnas);
         avanzaGeneracion(tablero, numFilas, numColumnas);
     }
-    
+    unsigned resultado[numFilas][numColumnas] = {0};
+    for (unsigned i = 0; i < unsigned(numFilas); i++){
+        for (unsigned j = 0; j < unsigned(numColumnas); j++) { 
+            resultado[i][j]= vecinas(tablero, numFilas, numColumnas, i, j);
+        }
+    }
+    for (unsigned i = 0; i < unsigned(numFilas); i++){
+        for (unsigned j = 0; j < unsigned(numColumnas); j++) { 
+            cout << setw(2) << resultado[i][j];
+        }
+        cout << endl;
+    }
     return 0;
 }
 
