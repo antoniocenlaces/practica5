@@ -114,6 +114,33 @@ void imprimeTablero(bool tablero[][MAX_COLUMNAS], const int numFilas, const int 
     }
 }
 
+/*
+ * Pre:  tablero es una matriz de booleanos con MAX_FILAS x MAX_COLUMNAS
+ *        0 < numFilas <= MAX_FILAS
+ *        0 < numColumnas <= MAX_COLUMNAS
+ *       
+ * Post: Muestra en pantalla el contenido de tablero de numFilas x numColumnas
+ *       cuando el contenido de la celda es 'true' escribe '*'
+ *       cuando el contenido de la celda es 'false' escribe ' '
+ */
+unsigned cuentaVivas(bool tablero[][MAX_COLUMNAS], const int numFilas, const int numColumnas) {
+    unsigned vivas = 0;
+    for (unsigned i = 0; i < unsigned(numFilas); i++){
+        for (unsigned j = 0; j < unsigned(numColumnas); j++) { 
+            vivas += tablero[i][j];
+        }
+    }
+    return vivas;
+}
+
+/*
+ * Pre:  tablero es una matriz de booleanos con MAX_FILAS x MAX_COLUMNAS
+ *        0 < numFilas <= MAX_FILAS
+ *        0 < numColumnas <= MAX_COLUMNAS
+ *       
+ * Post: Aplica las reglas del juego de la vida a todas las celdas de tablero
+ *       para avanzar a la siguiente generación
+ */
 void avanzaGeneracion(bool tablero[][MAX_COLUMNAS], const int numFilas, const int numColumnas) {
  for (unsigned i = 0; i < 1000000; i++){
     int a;
@@ -137,8 +164,8 @@ int main() {
     borrarPantalla();
     cout << "Generación 0" << endl;
     imprimeTablero(tablero, numFilas, numColumnas);
-
-    for (unsigned g = 1; g <= generaciones; g++) {
+    
+    for (unsigned g = 1; g <= unsigned(generaciones); g++) {
         subirCursor(numFilas + 1);
         cout << "Generación " << g  << endl;
         imprimeTablero(tablero, numFilas, numColumnas);
@@ -147,3 +174,6 @@ int main() {
     
     return 0;
 }
+
+// cout << "Hay " << cuentaVivas(tablero, numFilas, numColumnas) << " vivas" << endl;
+//     cout << "que es un " << (double(cuentaVivas(tablero, numFilas, numColumnas))/(numFilas*numColumnas)*100) << "%" << endl;
