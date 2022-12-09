@@ -27,7 +27,7 @@
 #include <cmath>
 // #include <ctime>
 // <ctime> debe usarse para mejorar la aleatoriedad de srand
-// #include <cstdlib>
+
 
 
 using namespace std;
@@ -62,14 +62,15 @@ void pideDatos(double& x, double& y) {
 *  NUM_COMPLEJOS elementos y cumpliendo que tanto su parte real como imaginaria
 *  están entre x e y, con x < y
 */
-void generaVectorAleatorio(const double x, const double y, Complejo vectorComplejo[NUM_COMPLEJOS]) {
+void generaVectorAleatorio(const double x, const double y, Complejo vectorComplejo[NUM_COMPLEJOS])
+{
     for (unsigned i = 0; i < NUM_COMPLEJOS; i++) {
         vectorComplejo[i] = { aleatorio(x, y), aleatorio(x, y)};
     }
 }
 
 /* Pre: 
-*  Post: Escribe por pantalla un núemro complejo
+*  Post: Escribe por pantalla un número complejo
 */
 void imprimeComplejo(const Complejo numero) {
      cout << fixed << setprecision(PRECISON) << numero.a 
@@ -151,12 +152,16 @@ int main() {
     // a la línea a continuación, además de #include <ctime>
     // srand(time(NULL));
 
+    // Declara variables para almacenar los datos introducidos por usuario
     double x, y;
+    // Declara un vector de Compljos con NUM_COMPLEJOS elementos
     Complejo vectorComplejo[NUM_COMPLEJOS];
 
+    // Pide datos al usuario
     pideDatos(x, y);
     cout << endl;
 
+    // Genera de forma aleatoria NUM_COMPLEJOS números complejos y los almacena en vectorComplejo[]
     generaVectorAleatorio(x, y, vectorComplejo);
 
     imprimeVector(vectorComplejo);
